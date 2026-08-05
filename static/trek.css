@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  background-color: rgb(252, 245, 235);
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.sidebar {
+  background-color: white;
+  width: 20%;
+  height: 100%;
+  padding-top: 98px;
+  border-right: solid 1px rgb(10, 10, 10);
+
+}
+
+li {
+  padding-top: 35px;
+  padding-left: 12px;
+  font-size: 18px;
+  margin: 12px;
+
+
+}
+
+.elements {
+  padding-top: 31px;
+}
+
+.main {
+  flex: 1;
+  background-color: white;
+
+
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: black;
+}
+
+.active {
+  background: #e8f0fe;
+  color: #2563eb;
+  border-radius: 8px;
+}
+
+.navbar {
+  width: 100%;
+  height: 15%;
+  background-color: white;
+  margin: none;
+  border-bottom: solid 1px rgb(10, 10, 10);
+  display: flex;
+}
+
+h1 {
+  padding-top: 45px;
+  margin: auto;
+  padding-left: 15px;
+
+}
+
+.admin {
+  padding-top: 80px;
+  font-size: 43px;
+}
+
+i {
+  padding-top: 80px;
+  font-size: 43px;
+}
+
+#search {
+  width: 90%;
+  height: 40px;
+  border-radius: 8px;
+  margin-left: 60px;
+  margin-top: 14px;
+
+
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+
+
+}
+
+.add-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.hclass {
+  padding-right: 1100px;
+}
+
+
+.bkt {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  background-color: white;
+}
+
+.bkt th,
+.bkt td {
+  border: 1px solid #ddd;
+  padding: 22px;
+  text-align: left;
+}
+
+.bkt th {
+  background-color: #f3f3f3;
+  font-weight: bold;
+}
+
+.bkt tr:hover {
+  background-color: #f9f9f9;
+}
+
+tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+h2 {
+  margin-top: 35px;
+  margin-bottom: 15px;
+}
+
+.pagination {
+  padding-left: 399px;
+}

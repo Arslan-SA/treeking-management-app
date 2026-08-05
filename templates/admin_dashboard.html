@@ -1,11 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
+
 <body>
-    
+    <div class="container">
+        <aside class="sidebar">
+
+            <ul>
+
+                <li>
+                    <a href="/admin-dashboard"><i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li><a href="/admin-treek"><i class="bi bi-backpack"></i> Treks</a></li>
+                <li><a href=""><i class="bi bi-person-badge"></i> Staff</a></li>
+                <li><a href=""><i class="bi bi-people"></i> Users</a></li>
+                <li><a href=""><i class="bi bi-calendar-check"></i> Bookings</a></li>
+                <li><a href=""><i class="bi bi-search"></i> Search</a></li>
+                <li><a href=""><i class="bi bi-file-earmark-bar-graph"></i> Reports</a></li>
+                <li><a href=""><i class="bi bi-gear"></i> Settings</a></li>
+                <li><a href="/login"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            </ul>
+
+        </aside>
+        <div class="main">
+            <header class="navbar">
+                <h1>Trekking Management Application</h1>
+                <i class="bi bi-person-circle"></i>
+
+                <p class="admin">Admin</p>
+                <i class="bi bi-chevron-down"></i>
+
+
+            </header>
+            <p id="title">Dashboard</p>
+            <div class="cards">
+                <div class="card1">
+                    <h3>Total Treks</h3>
+                    <p class='one'>25</p>
+                    <i class="bi bi-backpack" id="user-icon"></i>
+                </div>
+                <div class="card2">
+                    <h3>Total Users</h3>
+                    <p class='one'>120</p>
+                    <i class="bi bi-person fs-1" id="user-icon"></i>
+
+                </div>
+                <div class="card3">
+                    <h3>Total Staff</h3>
+                    <p class='one'>25</p>
+                    <i class="bi bi-people fs-1" id="user-icon"></i>
+
+                </div>
+                <div class="card4">
+                    <h3>Total Bookings</h3>
+                    <p class='one'>50</p>
+                    <i class="bi bi-calendar-check fs-1" id="user-icon"></i>
+
+                </div>
+            </div>
+            <div class="table">
+                <h1>Recent Bookings</h1>
+                <table class="bkt">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>User</th>
+                            <th>Trek</th>
+                            <th>Booking Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>B001</td>
+                            <td>Amit Sharma</td>
+                            <td>Everest Base Camp</td>
+                            <td>12 May 2026</td>
+                            <td>Booked</td>
+                        </tr>
+                        <tr>
+                            <td>B002</td>
+                            <td>Priya Patel</td>
+                            <td>Roopkund Trek</td>
+                            <td>14 June 2026</td>
+                            <td>Cancelled</td>
+                        </tr>
+                        <tr>
+                            <td>B003</td>
+                            <td> Rahul Gupta</td>
+                            <td>Valley of Flowers</td>
+                            <td>20 July 2026</td>
+                            <td>Confirmed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a href="" id="view">View All Bookings --></a>
+        </div>
+
+    </div>
+
 </body>
+
 </html>
