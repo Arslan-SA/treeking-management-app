@@ -1,0 +1,337 @@
+/* =========================
+   Google Font
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f4f7fc;
+  color: #333;
+}
+
+/* =========================
+   Dashboard Layout
+========================= */
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* =========================
+   Sidebar
+========================= */
+
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #1e3a8a, #2563eb);
+  color: #fff;
+  padding: 30px 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.logo {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 12px;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 16px;
+  border-radius: 12px;
+  transition: .3s;
+  font-size: 15px;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, .15);
+}
+
+.sidebar li.active a {
+  background: #fff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.sidebar i {
+  font-size: 20px;
+}
+
+/* =========================
+   Main Content
+========================= */
+
+.content {
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  padding: 35px;
+}
+
+/* =========================
+   Navbar
+========================= */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 18px 25px;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
+}
+
+.topbar h2 {
+  font-size: 22px;
+  color: #1e3a8a;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: #555;
+}
+
+.profile i {
+  font-size: 28px;
+  color: #2563eb;
+}
+
+.page-title {
+  margin: 35px 0 20px;
+  color: #222;
+  font-size: 32px;
+}
+
+/* =========================
+   Cards
+========================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #fff;
+  padding: 28px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+  transition: .3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card h4 {
+  color: #777;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.card h2 {
+  color: #1e3a8a;
+  font-size: 34px;
+}
+
+.card i {
+  font-size: 48px;
+  color: #2563eb;
+}
+
+/* =========================
+   Table
+========================= */
+
+.table-box {
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.table-header h2 {
+  color: #1e3a8a;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #2563eb;
+  color: #fff;
+}
+
+thead th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+}
+
+tbody td {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr {
+  transition: .25s;
+}
+
+tbody tr:hover {
+  background: #f7faff;
+}
+
+/* =========================
+   Status
+========================= */
+
+.status {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status.open {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.status.closed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* =========================
+   Button
+========================= */
+
+.manage-btn {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: .3s;
+  font-weight: 500;
+}
+
+.manage-btn:hover {
+  background: #1d4ed8;
+}
+
+/* =========================
+   Scrollable Table
+========================= */
+
+.table-box {
+  overflow-x: auto;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media(max-width:900px) {
+
+  .sidebar {
+    width: 80px;
+    padding: 25px 10px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .sidebar a {
+    justify-content: center;
+    padding: 14px;
+  }
+
+  .sidebar a span {
+    display: none;
+  }
+
+  .sidebar a {
+    font-size: 0;
+  }
+
+  .sidebar i {
+    font-size: 22px;
+    margin: 0;
+  }
+
+  .content {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+  }
+
+  .topbar {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
+
+@media(max-width:600px) {
+
+  .content {
+    padding: 18px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  table {
+    min-width: 700px;
+  }
+}

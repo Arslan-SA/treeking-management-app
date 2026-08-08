@@ -1,0 +1,58 @@
+<table class="staff-table">
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    {% if pending_staff %}
+
+    {% for staff in pending_staff %}
+
+    <tr>
+
+      <td>{{ staff.id }}</td>
+      <td>{{ staff.user.username }}</td>
+      <td>{{ staff.user.email }}</td>
+      <td>{{ staff.phone }}</td>
+      <td>Pending</td>
+
+      <td>
+
+        <a href="{{ url_for('approve_staff', staff_id=staff.id) }}">
+          <button class="approve-btn">
+            Approve
+          </button>
+        </a>
+
+        <button class="reject-btn">
+          Reject
+        </button>
+
+      </td>
+
+    </tr>
+
+    {% endfor %}
+
+    {% else %}
+
+    <tr>
+      <td colspan="6" style="text-align:center;">
+        No pending staff requests.
+      </td>
+    </tr>
+
+    {% endif %}
+
+  </tbody>
+
+</table>

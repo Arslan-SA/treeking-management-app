@@ -1,0 +1,354 @@
+/* ==========================================================================
+   Manage Trek — matches staff_dashboard.css visual language
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: #F4F6FB;
+  color: #1B2559;
+}
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Sidebar                                                                 */
+/* ---------------------------------------------------------------------- */
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #16215C 0%, #2F4CDD 100%);
+  padding: 32px 20px;
+  flex-shrink: 0;
+}
+
+.sidebar .logo {
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 40px;
+  padding-left: 8px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 8px;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #E4E9FF;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar ul li a i {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar ul li a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.sidebar ul li.active a {
+  background: #ffffff;
+  color: #2F4CDD;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Main content                                                           */
+/* ---------------------------------------------------------------------- */
+
+.content {
+  flex: 1;
+  min-width: 0;
+  /* prevents flex child from overflowing past viewport */
+  padding: 32px 40px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 28px;
+  box-shadow: 0 4px 14px rgba(22, 33, 92, 0.06);
+  margin-bottom: 28px;
+}
+
+.topbar h2 {
+  color: #16215C;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: #1B2559;
+}
+
+.profile i {
+  font-size: 26px;
+  color: #2F4CDD;
+}
+
+.content h1 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #16215C;
+  margin-bottom: 24px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Trek Information card                                                  */
+/* ---------------------------------------------------------------------- */
+
+.info-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px 32px;
+  box-shadow: 0 4px 14px rgba(22, 33, 92, 0.06);
+  margin-bottom: 28px;
+}
+
+.info-card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #16215C;
+  margin-bottom: 20px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+}
+
+.info-grid>div {
+  min-width: 0;
+  /* lets the column shrink instead of forcing the page wider */
+}
+
+.info-grid label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8A93B8;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.info-grid label:first-child {
+  margin-top: 0;
+}
+
+.info-grid p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1B2559;
+}
+
+.info-grid input[type="number"],
+.info-grid select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #E1E5F5;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1B2559;
+  background: #F8F9FD;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.info-grid input[type="number"]:focus,
+.info-grid select:focus {
+  border-color: #2F4CDD;
+  background: #ffffff;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Participants table card                                                */
+/* ---------------------------------------------------------------------- */
+
+.table-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px 32px;
+  box-shadow: 0 4px 14px rgba(22, 33, 92, 0.06);
+  margin-bottom: 28px;
+}
+
+.table-card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #16215C;
+  margin-bottom: 20px;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-card table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+}
+
+.table-card thead tr {
+  background: #2F4CDD;
+}
+
+.table-card thead th {
+  color: #ffffff;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 18px;
+}
+
+.table-card thead th:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.table-card thead th:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.table-card tbody td {
+  padding: 16px 18px;
+  font-size: 14px;
+  color: #1B2559;
+  border-bottom: 1px solid #EEF0FA;
+}
+
+.table-card tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  background: #E9EEFF;
+  color: #2F4CDD;
+  text-transform: capitalize;
+}
+
+.badge:has(+ .badge) {
+  /* fallback, ignored by most browsers; status coloring handled below */
+}
+
+/* Optional status-specific coloring, add matching classes server-side if desired */
+.status.open,
+.badge.confirmed {
+  background: #E3F8EC;
+  color: #1C9A5B;
+}
+
+.status.closed,
+.badge.cancelled {
+  background: #FCE4E4;
+  color: #E5484D;
+}
+
+.badge.pending {
+  background: #FFF4DE;
+  color: #C88A1B;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Action buttons                                                         */
+/* ---------------------------------------------------------------------- */
+
+.buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.buttons button {
+  border: none;
+  border-radius: 10px;
+  padding: 13px 26px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.buttons button:hover {
+  transform: translateY(-1px);
+}
+
+.start-btn {
+  background: #2F4CDD;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(47, 76, 221, 0.3);
+}
+
+.complete-btn {
+  background: #1C9A5B;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(28, 154, 91, 0.3);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Responsive                                                             */
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .content {
+    padding: 24px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .table-card {
+    overflow-x: auto;
+  }
+}

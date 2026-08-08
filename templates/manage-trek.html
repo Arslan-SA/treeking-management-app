@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Manage Trek</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="{{ url_for('static',filename='manage_trek.css') }}">
+
+</head>
+
+<body>
+
+  <div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+      <h2 class="logo">Trekking</h2>
+
+      <ul>
+
+        <li>
+          <a href="{{ url_for('staff_dashboard') }}">
+            <i class="bi bi-grid"></i>
+            Dashboard
+          </a>
+        </li>
+
+        <li class="active">
+          <a href="#">
+            <i class="bi bi-backpack"></i>
+            My Treks
+          </a>
+        </li>
+
+        <li>
+          <a href="{{ url_for('view_participants', trek_id=trek.id) }}">
+            <i class="bi bi-people"></i>
+            Participants
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="bi bi-person"></i>
+            Profile
+          </a>
+        </li>
+
+        <li>
+          <a href="">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
+          </a>
+        </li>
+
+      </ul>
+
+    </aside>
+
+
+    <!-- Main -->
+
+    <main class="content">
+
+      <!-- Navbar -->
+
+      <nav class="topbar">
+
+        <h2>Trekking Management Application</h2>
+
+        <div class="profile">
+
+          <i class="bi bi-person-circle"></i>
+
+          {{ session["username"] }}
+
+        </div>
+
+      </nav>
+
+
+      <h1>{{ trek.name }}</h1>
+
+
+      <div class="info-card">
+
+        <h2>Trek Information</h2>
+
+        <div class="info-grid">
+
+          <div>
+
+            <label>Location</label>
+            <p>{{ trek.location }}</p>
+
+            <label>Difficulty</label>
+            <p>{{ trek.difficulty }}</p>
+
+            <label>Start Date</label>
+            <p>{{ trek.start_date }}</p>
+
+            <label>End Date</label>
+            <p>{{ trek.end_date }}</p>
+
+          </div>
+
+          <div>
+
+            <label>Total Slots</label>
+
+            <p>{{ trek.max_capacity }}</p>
+
+            <label>Available Slots</label>
+
+            <input type="number" value="{{ trek.available_slots }}">
+
+            <label>Status</label>
+
+            <select>
+
+              <option {% if trek.is_open %} selected {% endif %}>
+                Open
+              </option>
+
+              <option {% if not trek.is_open %} selected {% endif %}>
+                Closed
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="table-card">
+
+        <h2>
+          Participants ({{ trek.bookings|length }})
+        </h2>
+
+        <div class="table-scroll">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>Name</th>
+                <th>Email</th>
+                <th>Booking Date</th>
+                <th>Status</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {% for booking in trek.bookings %}
+
+              <tr>
+
+                <td>{{ booking.user.username }}</td>
+
+                <td>{{ booking.user.email }}</td>
+
+                <td>{{ booking.booking_date }}</td>
+
+                <td>
+
+                  <span class="badge">
+
+                    {{ booking.status }}
+
+                  </span>
+
+                </td>
+
+              </tr>
+
+              {% endfor %}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <div class="buttons">
+
+        <button class="start-btn">
+
+          Mark as Started
+
+        </button>
+
+        <button class="complete-btn">
+
+          Mark as Completed
+
+        </button>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+
+</html>

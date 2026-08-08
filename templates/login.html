@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trekking Managment App</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 
 <body>
@@ -15,12 +15,12 @@
 
     <div>
       <p id="login">Login</p>
-      <form action="url" method="post">
-        <input type="text" placeholder="Email" id="in">
+      <form action="{{ url_for('login') }}" method="POST">
+        <input type="email" placeholder="Email" id="in" name="email" required>
         <br>
         <br>
 
-        <input type="text" placeholder="Password" id="in">
+        <input type="password" placeholder="Password" id="in" name="password" required>
         <div class="remember">
           <input type="checkbox" id="me">
           <label for="me">Remember Me</label>
@@ -35,7 +35,7 @@
       <br>
 
       <p id="line">
-        Don't have an account?<a href="signup.html">Register here</a>
+        Don't have an account?<a href="{{url_for('register')}}">Register here</a>
       </p>
 
 
