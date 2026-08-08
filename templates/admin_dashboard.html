@@ -19,14 +19,13 @@
                     <a href="/admin-dashboard"><i class="bi bi-house-door"></i> Dashboard
                     </a>
                 </li>
-                <li><a href="/admin-treek"><i class="bi bi-backpack"></i> Treks</a></li>
-                <li><a href="/staff-approval"><i class="bi bi-person-badge"></i> Staff</a></li>
-                <li><a href=""><i class="bi bi-people"></i> Users</a></li>
-                <li><a href=""><i class="bi bi-calendar-check"></i> Bookings</a></li>
-                <li><a href=""><i class="bi bi-search"></i> Search</a></li>
-                <li><a href=""><i class="bi bi-file-earmark-bar-graph"></i> Reports</a></li>
-                <li><a href=""><i class="bi bi-gear"></i> Settings</a></li>
-                <li><a href="/login"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                <li><a href="{{ url_for('admin_treek') }}"><i class="bi bi-backpack"></i> Treks</a></li>
+                <li><a href="{{ url_for('admin_staff') }}"><i class="bi bi-person-badge"></i> Staff</a></li>
+                <li><a href="{{ url_for('admin_users') }}"><i class="bi bi-people"></i> Users</a></li>
+                <li><a href="{{ url_for('admin_bookings') }}"><i class="bi bi-calendar-check"></i> Bookings</a></li>
+                <li><a href="{{ url_for('admin_search') }}"><i class="bi bi-search"></i> Search</a></li>
+                <li><a href="{{ url_for('staff_approval') }}"><i class="bi bi-check2-square"></i> Approvals</a></li>
+                <li><a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
             </ul>
 
         </aside>
@@ -44,24 +43,24 @@
             <div class="cards">
                 <div class="card1">
                     <h3>Total Treks</h3>
-                    <p class='one'>25</p>
+                    <p class='one'>{{ stats.total_treks }}</p>
                     <i class="bi bi-backpack" id="user-icon"></i>
                 </div>
                 <div class="card2">
                     <h3>Total Users</h3>
-                    <p class='one'>120</p>
+                    <p class='one'>{{ stats.total_users }}</p>
                     <i class="bi bi-person fs-1" id="user-icon"></i>
 
                 </div>
                 <div class="card3">
                     <h3>Total Staff</h3>
-                    <p class='one'>25</p>
+                    <p class='one'>{{ stats.total_staff }}</p>
                     <i class="bi bi-people fs-1" id="user-icon"></i>
 
                 </div>
                 <div class="card4">
                     <h3>Total Bookings</h3>
-                    <p class='one'>50</p>
+                    <p class='one'>{{ stats.total_bookings }}</p>
                     <i class="bi bi-calendar-check fs-1" id="user-icon"></i>
 
                 </div>
@@ -79,31 +78,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for booking in recent_bookings %}
                         <tr>
-                            <td>B001</td>
-                            <td>Amit Sharma</td>
-                            <td>Everest Base Camp</td>
-                            <td>12 May 2026</td>
-                            <td>Booked</td>
+                            <td>{{ booking.id }}</td>
+                            <td>{{ booking.user.username }}</td>
+                            <td>{{ booking.trek.name }}</td>
+                            <td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+                            <td>{{ booking.booking_status }}</td>
                         </tr>
+                        {% else %}
                         <tr>
-                            <td>B002</td>
-                            <td>Priya Patel</td>
-                            <td>Roopkund Trek</td>
-                            <td>14 June 2026</td>
-                            <td>Cancelled</td>
+                            <td colspan="5">No booking records yet.</td>
                         </tr>
-                        <tr>
-                            <td>B003</td>
-                            <td> Rahul Gupta</td>
-                            <td>Valley of Flowers</td>
-                            <td>20 July 2026</td>
-                            <td>Confirmed</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <a href="" id="view">View All Bookings --></a>
+            <a href="{{ url_for('admin_bookings') }}" id="view">View All Bookings --></a>
         </div>
 
     </div>

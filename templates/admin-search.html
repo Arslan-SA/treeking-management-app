@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Search</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin_treek') }}">Treks</a></li>
+        <li><a href="{{ url_for('admin_staff') }}">Staff</a></li>
+        <li><a href="{{ url_for('admin_users') }}">Users</a></li>
+        <li><a href="{{ url_for('admin_bookings') }}">Bookings</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </aside>
+    <div class="main">
+      <header class="navbar"><h1>Trekking Management Application</h1></header>
+      <p id="title">Search</p>
+      <form action="{{ url_for('admin_search') }}" method="GET">
+        <input id="search" type="text" name="search" placeholder="Search treks, users, staff by name or ID" value="{{ search }}">
+        <button type="submit">Search</button>
+      </form>
+
+      <h2>Treks</h2>
+      <table class="bkt">
+        <tbody>
+          {% for trek in results.treks %}
+          <tr><td>{{ trek.id }}</td><td>{{ trek.name }}</td><td>{{ trek.location }}</td><td>{{ trek.status }}</td></tr>
+          {% else %}
+          <tr><td>No trek results.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h2>Users</h2>
+      <table class="bkt">
+        <tbody>
+          {% for user in results.users %}
+          <tr><td>{{ user.id }}</td><td>{{ user.username }}</td><td>{{ user.email }}</td><td>{{ "Active" if user.is_active else "Inactive" }}</td></tr>
+          {% else %}
+          <tr><td>No user results.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h2>Staff</h2>
+      <table class="bkt">
+        <tbody>
+          {% for staff in results.staff %}
+          <tr><td>{{ staff.id }}</td><td>{{ staff.username }}</td><td>{{ staff.email }}</td><td>{{ "Active" if staff.is_active else "Inactive" }}</td></tr>
+          {% else %}
+          <tr><td>No staff results.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Staff</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin_treek') }}">Treks</a></li>
+        <li><a href="{{ url_for('staff_approval') }}">Approvals</a></li>
+        <li><a href="{{ url_for('admin_users') }}">Users</a></li>
+        <li><a href="{{ url_for('admin_bookings') }}">Bookings</a></li>
+        <li><a href="{{ url_for('admin_search') }}">Search</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </aside>
+    <div class="main">
+      <header class="navbar"><h1>Trekking Management Application</h1></header>
+      <p id="title">Trek Staff</p>
+      <form action="{{ url_for('admin_staff') }}" method="GET">
+        <input id="search" type="text" name="search" placeholder="Search staff by name, email, or ID" value="{{ search }}">
+      </form>
+      <table class="bkt">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Approved</th>
+            <th>Status</th>
+            <th>Assigned Treks</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for staff in staff_members %}
+          <tr>
+            <td>{{ staff.id }}</td>
+            <td>{{ staff.username }}</td>
+            <td>{{ staff.email }}</td>
+            <td>{{ "Yes" if staff.staff_profile and staff.staff_profile.approved else "No" }}</td>
+            <td>{{ "Active" if staff.is_active else "Inactive" }}</td>
+            <td>{{ staff.treks|length }}</td>
+            <td>
+              <form action="{{ url_for('toggle_user', user_id=staff.id) }}" method="POST" style="display:inline;">
+                <button type="submit">{{ "Deactivate" if staff.is_active else "Activate" }}</button>
+              </form>
+              <form action="{{ url_for('delete_staff', user_id=staff.id) }}" method="POST" style="display:inline;">
+                <button type="submit">Remove</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7">No staff found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>

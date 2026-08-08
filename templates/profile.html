@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='user-dashboard.css') }}">
+</head>
+
+<body>
+  <main style="max-width: 760px; margin: 40px auto; background: #fff; padding: 28px; border: 1px solid #e5e8ee;">
+    <a href="{% if session.role == 'admin' %}{{ url_for('admin_dashboard') }}{% elif session.role == 'staff' %}{{ url_for('staff_dashboard') }}{% else %}{{ url_for('user_dashboard') }}{% endif %}">Back to Dashboard</a>
+    <h1>Update Profile</h1>
+    <form action="{{ url_for('profile') }}" method="POST">
+      <label>Username</label>
+      <input type="text" name="username" value="{{ user.username }}" required>
+      <br><br>
+      <label>Email</label>
+      <input type="email" name="email" value="{{ user.email }}" required>
+      <br><br>
+      <label>New Password</label>
+      <input type="password" name="password" placeholder="Leave blank to keep current password">
+      <br><br>
+      {% if staff_profile %}
+      <label>Phone</label>
+      <input type="text" name="phone" value="{{ staff_profile.phone or '' }}">
+      <br><br>
+      <label>Experience</label>
+      <input type="number" name="experience" min="0" value="{{ staff_profile.experience or 0 }}">
+      <br><br>
+      <p>Approval Status: {{ "Approved" if staff_profile.approved else "Pending" }}</p>
+      {% endif %}
+      <button type="submit">Save Profile</button>
+    </form>
+  </main>
+</body>
+
+</html>

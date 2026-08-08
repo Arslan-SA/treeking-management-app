@@ -2,258 +2,108 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Participants</title>
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
   <link rel="stylesheet" href="{{ url_for('static', filename='staff_dashboard.css') }}">
-
 </head>
 
 <body>
-
   <div class="dashboard">
-
-    <!-- Sidebar -->
     <aside class="sidebar">
-
       <h2 class="logo">Trekking</h2>
-
       <ul>
-
-        <li>
-          <a href="#">
-            <i class="bi bi-grid"></i>
-            Dashboard
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            <i class="bi bi-backpack"></i>
-            My Treks
-          </a>
-        </li>
-
-        <li class="active">
-          <a href="#">
-            <i class="bi bi-people"></i>
-            Participants
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            <i class="bi bi-person"></i>
-            Profile
-          </a>
-        </li>
-
-        <li>
-          <a href="#">
-            <i class="bi bi-box-arrow-right"></i>
-            Logout
-          </a>
-        </li>
-
+        <li><a href="{{ url_for('staff_dashboard') }}"><i class="bi bi-grid"></i> Dashboard</a></li>
+        <li><a href="{{ url_for('manage_trek', trek_id=trek.id) }}"><i class="bi bi-backpack"></i> Manage Trek</a></li>
+        <li class="active"><a href="{{ url_for('view_participants', trek_id=trek.id) }}"><i class="bi bi-people"></i> Participants</a></li>
+        <li><a href="{{ url_for('profile') }}"><i class="bi bi-person"></i> Profile</a></li>
+        <li><a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
       </ul>
-
     </aside>
 
-
-    <!-- Main -->
-
     <main class="content">
-
-      <!-- Navbar -->
-
       <nav class="topbar">
-
         <h2>Trekking Management Application</h2>
-
-        <div class="profile">
-          <i class="bi bi-person-circle"></i>
-          Arslan
-        </div>
-
+        <div class="profile"><i class="bi bi-person-circle"></i> {{ session.username }}</div>
       </nav>
 
-      <h1 class="page-title">Participants</h1>
-
-
-      <!-- Stat cards -->
+      <h1 class="page-title">{{ trek.name }} Participants</h1>
 
       <section class="cards">
-
         <div class="card">
           <div>
             <h4>Total Participants</h4>
-            <h2>24</h2>
+            <h2>{{ trek.bookings|length }}</h2>
           </div>
           <i class="bi bi-people"></i>
         </div>
-
         <div class="card">
           <div>
-            <h4>Confirmed</h4>
-            <h2>17</h2>
+            <h4>Booked</h4>
+            <h2>{{ trek.bookings|selectattr("booking_status", "equalto", "Booked")|list|length }}</h2>
           </div>
           <i class="bi bi-check-circle"></i>
         </div>
-
         <div class="card">
           <div>
-            <h4>Pending</h4>
-            <h2>5</h2>
+            <h4>Completed</h4>
+            <h2>{{ trek.bookings|selectattr("booking_status", "equalto", "Completed")|list|length }}</h2>
           </div>
-          <i class="bi bi-hourglass-split"></i>
+          <i class="bi bi-flag"></i>
         </div>
-
         <div class="card">
           <div>
             <h4>Cancelled</h4>
-            <h2>2</h2>
+            <h2>{{ trek.bookings|selectattr("booking_status", "equalto", "Cancelled")|list|length }}</h2>
           </div>
           <i class="bi bi-x-circle"></i>
         </div>
-
       </section>
 
-
-      <!-- Participants table -->
-
-      <section class="table-card">
-
+      <section class="table-box">
         <div class="table-header">
-
-          <h2>All Participants</h2>
-
-          <div class="table-controls">
-
-            <div class="search-box">
-              <i class="bi bi-search"></i>
-              <input type="text" placeholder="Search by name or email">
-            </div>
-
-            <select class="filter-select">
-              <option value="">All Treks</option>
-              <option value="hiking">Hiking - Ranchi</option>
-              <option value="camping">Camping - Netarhat</option>
-              <option value="rafting">River Rafting - Rishikesh</option>
-            </select>
-
-            <select class="filter-select">
-              <option value="">All Statuses</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="pending">Pending</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
-
-          </div>
-
+          <h2>Participant Records</h2>
         </div>
 
-        <div class="table-scroll">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Trek</th>
-                <th>Booking Date</th>
-                <th>Status</th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              <!-- dummy row 1 -->
-              <tr>
-                <td>Ravi Kumar</td>
-                <td>ravi.kumar@example.com</td>
-                <td>Hiking - Ranchi</td>
-                <td>2026-07-28</td>
-                <td><span class="badge confirmed">Confirmed</span></td>
-              </tr>
-
-              <!-- dummy row 2 -->
-              <tr>
-                <td>Anjali Sharma</td>
-                <td>anjali.sharma@example.com</td>
-                <td>Camping - Netarhat</td>
-                <td>2026-07-30</td>
-                <td><span class="badge pending">Pending</span></td>
-              </tr>
-
-              <!-- dummy row 3 -->
-              <tr>
-                <td>Mohammed Irfan</td>
-                <td>irfan.m@example.com</td>
-                <td>River Rafting - Rishikesh</td>
-                <td>2026-08-01</td>
-                <td><span class="badge confirmed">Confirmed</span></td>
-              </tr>
-
-              <!-- dummy row 4 -->
-              <tr>
-                <td>Priya Verma</td>
-                <td>priya.verma@example.com</td>
-                <td>Hiking - Ranchi</td>
-                <td>2026-08-02</td>
-                <td><span class="badge cancelled">Cancelled</span></td>
-              </tr>
-
-              <!-- dummy row 5 -->
-              <tr>
-                <td>Sandeep Yadav</td>
-                <td>sandeep.y@example.com</td>
-                <td>Camping - Netarhat</td>
-                <td>2026-08-04</td>
-                <td><span class="badge pending">Pending</span></td>
-              </tr>
-
-              <!-- dummy row 6 -->
-              <tr>
-                <td>Neha Singh</td>
-                <td>neha.singh@example.com</td>
-                <td>Hiking - Ranchi</td>
-                <td>2026-08-05</td>
-                <td><span class="badge confirmed">Confirmed</span></td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-        <!-- optional pagination footer, wire up later if needed -->
-        <div class="table-footer">
-          <span>Showing 6 of 24 participants</span>
-
-          <div class="pagination">
-            <button class="page-btn" disabled><i class="bi bi-chevron-left"></i></button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn"><i class="bi bi-chevron-right"></i></button>
-          </div>
-        </div>
-
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Booking Date</th>
+              <th>Status</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for booking in trek.bookings %}
+            <tr>
+              <td>{{ booking.user.username }}</td>
+              <td>{{ booking.user.email }}</td>
+              <td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+              <td>{{ booking.booking_status }}</td>
+              <td>
+                <form action="{{ url_for('staff_update_booking_status', booking_id=booking.id) }}" method="POST">
+                  <select name="booking_status">
+                    <option value="Booked" {% if booking.booking_status=="Booked" %}selected{% endif %}>Booked</option>
+                    <option value="Cancelled" {% if booking.booking_status=="Cancelled" %}selected{% endif %}>Cancelled</option>
+                    <option value="Completed" {% if booking.booking_status=="Completed" %}selected{% endif %}>Completed</option>
+                  </select>
+                  <button type="submit" class="manage-btn">Save</button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="5">No participants registered for this trek.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </section>
-
     </main>
-
   </div>
-
 </body>
 
 </html>

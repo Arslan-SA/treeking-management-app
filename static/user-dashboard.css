@@ -1,0 +1,310 @@
+/* ==========================================================================
+   Trekking — User Dashboard
+   Simple, clean light theme: white surfaces, soft gray borders, blue accent.
+   ========================================================================== */
+
+:root {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --border: #e5e8ee;
+  --sidebar-bg: #fafbfc;
+
+  --blue: #2f6fed;
+  --blue-dark: #2558c4;
+  --blue-tint: #eaf1ff;
+
+  --text-hi: #1c2230;
+  --text-mid: #5b6472;
+  --text-low: #98a1ae;
+
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --radius: 8px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-hi);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------------- sidebar */
+
+.sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+}
+
+.sidebar .logo {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-hi);
+  margin: 0 0 28px;
+  padding: 0 24px;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 24px;
+  color: var(--text-mid);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar li a i {
+  font-size: 16px;
+  width: 16px;
+  text-align: center;
+  color: var(--text-low);
+}
+
+.sidebar li a:hover {
+  background: var(--blue-tint);
+  color: var(--text-hi);
+}
+
+.sidebar li.active a {
+  background: var(--blue-tint);
+  color: var(--blue);
+  border-left-color: var(--blue);
+  font-weight: 600;
+}
+
+.sidebar li.active a i {
+  color: var(--blue);
+}
+
+/* ---------------------------------------------------------------- main */
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar h1 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-hi);
+}
+
+.navbar .profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-hi);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.navbar .profile i {
+  font-size: 22px;
+  color: var(--text-low);
+}
+
+/* ---------------------------------------------------------------- welcome */
+
+.welcome {
+  padding: 28px 32px 4px;
+}
+
+.welcome h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--text-hi);
+}
+
+.welcome p {
+  color: var(--text-mid);
+  margin: 0;
+  font-size: 13.5px;
+}
+
+/* ---------------------------------------------------------------- sections */
+
+section.available-treks,
+section.my-bookings {
+  padding: 20px 32px;
+}
+
+section.available-treks h2,
+section.my-bookings h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: var(--text-hi);
+}
+
+/* ---------------------------------------------------------------- tables */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+thead th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-mid);
+  background: #fafbfc;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-mid);
+  font-size: 13.5px;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover td {
+  background: #fafbfc;
+}
+
+tbody td:first-child {
+  color: var(--text-hi);
+  font-weight: 600;
+}
+
+td[colspan] {
+  text-align: center;
+  color: var(--text-low);
+  padding: 24px;
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+button {
+  font-family: var(--font);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--blue);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+button:hover {
+  background: var(--blue-dark);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.available-treks a {
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- responsive */
+
+@media (max-width: 860px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .navbar,
+  .welcome,
+  section.available-treks,
+  section.my-bookings {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 18px;
+  }
+
+  tbody td {
+    border-bottom: none;
+    padding: 4px 0;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-low);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

@@ -6,11 +6,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Manage Trek</title>
+  <title>{{ trek.name }} - Manage Trek</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='manage_trek.css') }}">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-  <link rel="stylesheet" href="{{ url_for('static',filename='manage_trek.css') }}">
 
 </head>
 
@@ -18,10 +18,14 @@
 
   <div class="dashboard">
 
+
     <!-- Sidebar -->
+
     <aside class="sidebar">
 
-      <h2 class="logo">Trekking</h2>
+      <h2 class="logo">
+        Trekking
+      </h2>
 
       <ul>
 
@@ -47,14 +51,14 @@
         </li>
 
         <li>
-          <a href="#">
+          <a href="{{ url_for('profile') }}">
             <i class="bi bi-person"></i>
             Profile
           </a>
         </li>
 
         <li>
-          <a href="">
+          <a href="{{ url_for('logout') }}">
             <i class="bi bi-box-arrow-right"></i>
             Logout
           </a>
@@ -65,88 +69,162 @@
     </aside>
 
 
-    <!-- Main -->
+    <!-- Main Content -->
 
     <main class="content">
+
 
       <!-- Navbar -->
 
       <nav class="topbar">
 
-        <h2>Trekking Management Application</h2>
+        <h2>
+          Trekking Management Application
+        </h2>
 
         <div class="profile">
 
           <i class="bi bi-person-circle"></i>
 
-          {{ session["username"] }}
+          {{ session.username }}
 
         </div>
 
       </nav>
 
 
-      <h1>{{ trek.name }}</h1>
+      <!-- Trek Name -->
 
+      <h1 class="page-title">
+        {{ trek.name }}
+      </h1>
+
+
+      <!-- Trek Information -->
 
       <div class="info-card">
 
-        <h2>Trek Information</h2>
+        <h2>
+          Trek Information
+        </h2>
 
-        <div class="info-grid">
 
-          <div>
+        <form method="POST" action="{{ url_for('manage_trek', trek_id=trek.id) }}">
 
-            <label>Location</label>
-            <p>{{ trek.location }}</p>
 
-            <label>Difficulty</label>
-            <p>{{ trek.difficulty }}</p>
+          <div class="info-grid">
 
-            <label>Start Date</label>
-            <p>{{ trek.start_date }}</p>
 
-            <label>End Date</label>
-            <p>{{ trek.end_date }}</p>
+            <!-- Left Side -->
+
+            <div class="trek-info">
+
+              <label>
+                Location
+              </label>
+
+              <p>
+                {{ trek.location }}
+              </p>
+
+
+              <label>
+                Difficulty
+              </label>
+
+              <p>
+                {{ trek.difficulty }}
+              </p>
+
+
+              <label>
+                Start Date
+              </label>
+
+              <p>
+                {{ trek.start_date }}
+              </p>
+
+
+              <label>
+                End Date
+              </label>
+
+              <p>
+                {{ trek.end_date }}
+              </p>
+
+            </div>
+
+
+            <!-- Right Side -->
+
+            <div class="trek-controls">
+
+
+              <label>
+                Available Slots
+              </label>
+
+              <input type="number" name="available_slots" value="{{ trek.available_slots }}" min="0" required>
+
+
+              <label>
+                Status
+              </label>
+
+              <select name="status" required>
+
+                <option value="Open" {% if trek.status=="Open" %}selected{% endif %}>
+                  Open
+                </option>
+
+                <option value="Closed" {% if trek.status=="Closed" %}selected{% endif %}>
+                  Closed
+                </option>
+
+                <option value="Ongoing" {% if trek.status=="Ongoing" %}selected{% endif %}>
+                  Ongoing
+                </option>
+
+                <option value="Completed" {% if trek.status=="Completed" %}selected{% endif %}>
+                  Completed
+                </option>
+
+              </select>
+
+            </div>
 
           </div>
 
-          <div>
 
-            <label>Total Slots</label>
+          <!-- Save Button -->
 
-            <p>{{ trek.max_capacity }}</p>
+          <div class="save-container">
 
-            <label>Available Slots</label>
+            <button type="submit" class="save-btn">
 
-            <input type="number" value="{{ trek.available_slots }}">
+              <i class="bi bi-check-circle"></i>
 
-            <label>Status</label>
+              Save Changes
 
-            <select>
-
-              <option {% if trek.is_open %} selected {% endif %}>
-                Open
-              </option>
-
-              <option {% if not trek.is_open %} selected {% endif %}>
-                Closed
-              </option>
-
-            </select>
+            </button>
 
           </div>
 
-        </div>
+        </form>
 
       </div>
 
+
+      <!-- Participants -->
 
       <div class="table-card">
 
         <h2>
           Participants ({{ trek.bookings|length }})
         </h2>
+
 
         <div class="table-scroll">
 
@@ -157,13 +235,17 @@
               <tr>
 
                 <th>Name</th>
+
                 <th>Email</th>
+
                 <th>Booking Date</th>
+
                 <th>Status</th>
 
               </tr>
 
             </thead>
+
 
             <tbody>
 
@@ -171,19 +253,37 @@
 
               <tr>
 
-                <td>{{ booking.user.username }}</td>
+                <td>
+                  {{ booking.user.username }}
+                </td>
 
-                <td>{{ booking.user.email }}</td>
+                <td>
+                  {{ booking.user.email }}
+                </td>
 
-                <td>{{ booking.booking_date }}</td>
+                <td>
+                  {{ booking.booking_date.strftime("%d %b %Y") }}
+                </td>
 
                 <td>
 
                   <span class="badge">
 
-                    {{ booking.status }}
+                    {{ booking.booking_status }}
 
                   </span>
+
+                </td>
+
+              </tr>
+
+              {% else %}
+
+              <tr>
+
+                <td colspan="4" style="text-align:center;">
+
+                  No participants yet.
 
                 </td>
 
@@ -200,21 +300,41 @@
       </div>
 
 
+      <!-- Trek Actions -->
+
       <div class="buttons">
 
-        <button class="start-btn">
+        <form method="POST" action="{{ url_for('manage_trek', trek_id=trek.id) }}">
 
-          Mark as Started
+          <input type="hidden" name="status" value="Ongoing">
 
-        </button>
+          <input type="hidden" name="available_slots" value="{{ trek.available_slots }}">
 
-        <button class="complete-btn">
+          <button type="submit" class="start-btn">
 
-          Mark as Completed
+            Mark as Started
 
-        </button>
+          </button>
+
+        </form>
+
+
+        <form method="POST" action="{{ url_for('manage_trek', trek_id=trek.id) }}">
+
+          <input type="hidden" name="status" value="Completed">
+
+          <input type="hidden" name="available_slots" value="{{ trek.available_slots }}">
+
+          <button type="submit" class="complete-btn">
+
+            Mark as Completed
+
+          </button>
+
+        </form>
 
       </div>
+
 
     </main>
 

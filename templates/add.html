@@ -20,13 +20,12 @@
           </a>
         </li>
         <li><a href="/admin-treek"><i class="bi bi-backpack"></i> Treks</a></li>
-        <li><a href=""><i class="bi bi-person-badge"></i> Staff</a></li>
-        <li><a href=""><i class="bi bi-people"></i> Users</a></li>
-        <li><a href=""><i class="bi bi-calendar-check"></i> Bookings</a></li>
-        <li><a href=""><i class="bi bi-search"></i> Search</a></li>
-        <li><a href=""><i class="bi bi-file-earmark-bar-graph"></i> Reports</a></li>
-        <li><a href=""><i class="bi bi-gear"></i> Settings</a></li>
-        <li><a href="/login"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        <li><a href="{{ url_for('admin_staff') }}"><i class="bi bi-person-badge"></i> Staff</a></li>
+        <li><a href="{{ url_for('admin_users') }}"><i class="bi bi-people"></i> Users</a></li>
+        <li><a href="{{ url_for('admin_bookings') }}"><i class="bi bi-calendar-check"></i> Bookings</a></li>
+        <li><a href="{{ url_for('admin_search') }}"><i class="bi bi-search"></i> Search</a></li>
+        <li><a href="{{ url_for('staff_approval') }}"><i class="bi bi-check2-square"></i> Approvals</a></li>
+        <li><a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
       </ul>
 
     </aside>
@@ -90,7 +89,7 @@
 
             {% for staff in staff_members %}
 
-            <option value="{{ staff.id }}">
+            <option value="{{ staff.id }}" {% if trek and trek.assigned_staff_id==staff.id %}selected{% endif %}>
               {{ staff.username }}
             </option>
 
@@ -104,21 +103,9 @@
 
           <select id="status" name="status">
 
-            <option value="Pending" {% if trek and trek.status=="Pending" %}selected{% endif %}>
-              Pending
-            </option>
-
-            <option value="In Progress" {% if trek and trek.status=="In Progress" %}selected{% endif %}>
-              In Progress
-            </option>
-
-            <option value="Completed" {% if trek and trek.status=="Completed" %}selected{% endif %}>
-              Completed
-            </option>
-
-            <option value="Cancelled" {% if trek and trek.status=="Cancelled" %}selected{% endif %}>
-              Cancelled
-            </option>
+            {% for status in statuses %}
+            <option value="{{ status }}" {% if trek and trek.status==status %}selected{% endif %}>{{ status }}</option>
+            {% endfor %}
 
           </select>
           <label for="description" class="form-label">Description</label>

@@ -29,7 +29,10 @@ class StaffProfile(db.Model):
   phone = db.Column(db.String(15))
   experience = db.Column(db.Integer)
   approved = db.Column(db.Boolean, default=False)
-  user = db.relationship("User", backref="staff_profile")
+  user = db.relationship(
+    "User",
+    backref=db.backref("staff_profile", uselist=False, cascade="all, delete-orphan")
+  )
 
   def __repr__(self):
     return f"staff {self.user_id}"
@@ -64,6 +67,9 @@ class Trek(db.Model):
   
 class Booking(db.Model):
   __tablename__ = "bookings"
+  __table_args__ = (
+    db.UniqueConstraint("user_id", "trek_id", name="uq_user_trek_booking"),
+  )
   id = db.Column(db.Integer, primary_key = True)
   user_id = db.Column(
     db.Integer,

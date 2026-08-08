@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Details</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='user-dashboard.css') }}">
+</head>
+
+<body>
+  <main style="max-width: 760px; margin: 40px auto; background: #fff; padding: 28px; border: 1px solid #e5e8ee;">
+    <a href="{% if session.role == 'admin' %}{{ url_for('admin_bookings') }}{% elif session.role == 'staff' %}{{ url_for('view_participants', trek_id=booking.trek_id) }}{% else %}{{ url_for('my_bookings') }}{% endif %}">Back</a>
+    <h1>Booking #{{ booking.id }}</h1>
+    <p><strong>User:</strong> {{ booking.user.username }} ({{ booking.user.email }})</p>
+    <p><strong>Trek:</strong> {{ booking.trek.name }}</p>
+    <p><strong>Location:</strong> {{ booking.trek.location }}</p>
+    <p><strong>Difficulty:</strong> {{ booking.trek.difficulty }}</p>
+    <p><strong>Dates:</strong> {{ booking.trek.start_date }} to {{ booking.trek.end_date }}</p>
+    <p><strong>Trek Status:</strong> {{ booking.trek.status }}</p>
+    <p><strong>Booking Status:</strong> {{ booking.booking_status }}</p>
+    <p><strong>Payment Status:</strong> {{ booking.payment_status }}</p>
+    <p><strong>Booked On:</strong> {{ booking.booking_date.strftime("%d %b %Y") }}</p>
+  </main>
+</body>
+
+</html>

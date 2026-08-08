@@ -27,15 +27,15 @@
 
       <td>
 
-        <a href="{{ url_for('approve_staff', staff_id=staff.id) }}">
+        <form action="{{ url_for('approve_staff', staff_id=staff.id) }}" method="POST" style="display:inline;">
           <button class="approve-btn">
             Approve
           </button>
-        </a>
+        </form>
 
-        <button class="reject-btn">
-          Reject
-        </button>
+        <form action="{{ url_for('reject_staff', staff_id=staff.id) }}" method="POST" style="display:inline;">
+          <button class="reject-btn">Reject</button>
+        </form>
 
       </td>
 

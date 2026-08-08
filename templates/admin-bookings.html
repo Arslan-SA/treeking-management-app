@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Bookings</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('admin_treek') }}">Treks</a></li>
+        <li><a href="{{ url_for('admin_staff') }}">Staff</a></li>
+        <li><a href="{{ url_for('admin_users') }}">Users</a></li>
+        <li><a href="{{ url_for('admin_search') }}">Search</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </aside>
+    <div class="main">
+      <header class="navbar"><h1>Trekking Management Application</h1></header>
+      <p id="title">Booking Records</p>
+      <form action="{{ url_for('admin_bookings') }}" method="GET">
+        <input id="search" type="text" name="search" placeholder="Search bookings, users, treks, or IDs" value="{{ search }}">
+      </form>
+      <table class="bkt">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Trek</th>
+            <th>Date</th>
+            <th>Trek Status</th>
+            <th>Booking Status</th>
+            <th>Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for booking in bookings %}
+          <tr>
+            <td><a href="{{ url_for('booking_details', booking_id=booking.id) }}">{{ booking.id }}</a></td>
+            <td>{{ booking.user.username }}</td>
+            <td>{{ booking.trek.name }}</td>
+            <td>{{ booking.booking_date.strftime("%d %b %Y") }}</td>
+            <td>{{ booking.trek.status }}</td>
+            <td>{{ booking.booking_status }}</td>
+            <td>
+              <form action="{{ url_for('admin_update_booking_status', booking_id=booking.id) }}" method="POST">
+                <select name="booking_status">
+                  <option value="Booked" {% if booking.booking_status=="Booked" %}selected{% endif %}>Booked</option>
+                  <option value="Cancelled" {% if booking.booking_status=="Cancelled" %}selected{% endif %}>Cancelled</option>
+                  <option value="Completed" {% if booking.booking_status=="Completed" %}selected{% endif %}>Completed</option>
+                </select>
+                <button type="submit">Save</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7">No booking records found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
