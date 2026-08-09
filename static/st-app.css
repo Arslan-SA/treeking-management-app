@@ -36,7 +36,6 @@ body {
   padding: 18px 25px;
   cursor: pointer;
   color: #555;
-  transition: .3s;
 }
 
 .sidebar li i {
@@ -65,11 +64,9 @@ body {
   background: #fff;
   height: 70px;
   border-bottom: 1px solid #ddd;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 0 30px;
 }
 
@@ -110,7 +107,7 @@ body {
 
 .active-tab {
   color: #1565c0;
-  border: 2px solid #1565c0;
+  border-color: #1565c0;
 }
 
 /* Table */
@@ -128,7 +125,7 @@ table th {
 table th,
 table td {
   border: 1px solid #ddd;
-  padding: 16px;
+  padding: 14px;
   text-align: left;
 }
 
@@ -147,29 +144,19 @@ table td {
 
 /* Buttons */
 
-.approve {
-  background: #28a745;
-  color: white;
+button {
   border: none;
   padding: 10px 18px;
   border-radius: 5px;
   cursor: pointer;
+  color: #fff;
   margin-right: 8px;
+}
+
+.approve {
+  background: #28a745;
 }
 
 .reject {
   background: #dc3545;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.approve:hover {
-  background: #218838;
-}
-
-.reject:hover {
-  background: #c82333;
 }
