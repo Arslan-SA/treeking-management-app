@@ -6,7 +6,8 @@
 
 {% block content %}
 <section class="welcome">
-  <h2>Welcome, {{ session.username }}</h2>
+  <h2>Welcome, {{ current_user.username }}</h2>
+
   <p>Browse available treks and book your next adventure.</p>
 </section>
 

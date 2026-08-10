@@ -16,7 +16,8 @@
       <ul>
         <li><a href="{{ url_for('staff_dashboard') }}"><i class="bi bi-grid"></i> Dashboard</a></li>
         <li><a href="{{ url_for('manage_trek', trek_id=trek.id) }}"><i class="bi bi-backpack"></i> Manage Trek</a></li>
-        <li class="active"><a href="{{ url_for('view_participants', trek_id=trek.id) }}"><i class="bi bi-people"></i> Participants</a></li>
+        <li class="active"><a href="{{ url_for('view_participants', trek_id=trek.id) }}"><i class="bi bi-people"></i>
+            Participants</a></li>
         <li><a href="{{ url_for('profile') }}"><i class="bi bi-person"></i> Profile</a></li>
         <li><a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
       </ul>
@@ -25,10 +26,11 @@
     <main class="content">
       <nav class="topbar">
         <h2>Trekking Management Application</h2>
-        <div class="profile"><i class="bi bi-person-circle"></i> {{ session.username }}</div>
+        <div class="profile"><i class="bi bi-person-circle"></i> {{ current_user.username }}</div>
+
       </nav>
 
-      <h1 class="page-title">{{ trek.name }} Participants</h1>
+      <h1 class="page-title">Trek Participants</h1>
 
       <section class="cards">
         <div class="card">
@@ -87,17 +89,17 @@
                 <form action="{{ url_for('staff_update_booking_status', booking_id=booking.id) }}" method="POST">
                   <select name="booking_status">
                     <option value="Booked" {% if booking.booking_status=="Booked" %}selected{% endif %}>Booked</option>
-                    <option value="Cancelled" {% if booking.booking_status=="Cancelled" %}selected{% endif %}>Cancelled</option>
-                    <option value="Completed" {% if booking.booking_status=="Completed" %}selected{% endif %}>Completed</option>
+                    <option value="Cancelled" {% if booking.booking_status=="Cancelled" %}selected{% endif %}>Cancelled
+                    </option>
+                    <option value="Completed" {% if booking.booking_status=="Completed" %}selected{% endif %}>Completed
+                    </option>
                   </select>
                   <button type="submit" class="manage-btn">Save</button>
                 </form>
               </td>
             </tr>
             {% else %}
-            <tr>
-              <td colspan="5">No participants registered for this trek.</td>
-            </tr>
+
             {% endfor %}
           </tbody>
         </table>

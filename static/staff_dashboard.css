@@ -12,18 +12,11 @@ body {
   color: #333;
 }
 
-/* =========================
-   Dashboard Layout
-========================= */
 
 .dashboard {
   display: flex;
   min-height: 100vh;
 }
-
-/* =========================
-   Sidebar
-========================= */
 
 .sidebar {
   width: 240px;
@@ -72,18 +65,10 @@ body {
   font-size: 20px;
 }
 
-/* =========================
-   Main Content
-========================= */
-
 .content {
   flex: 1;
   padding: 30px;
 }
-
-/* =========================
-   Topbar
-========================= */
 
 .topbar {
   display: flex;
@@ -118,10 +103,6 @@ body {
   color: #222;
   font-size: 28px;
 }
-
-/* =========================
-   Cards
-========================= */
 
 .cards {
   display: flex;
@@ -158,10 +139,6 @@ body {
   font-size: 40px;
   color: #2563eb;
 }
-
-/* =========================
-   Table
-========================= */
 
 .table-box {
   background: #fff;
@@ -207,10 +184,6 @@ tbody tr:hover {
   background: #f7faff;
 }
 
-/* =========================
-   Status
-========================= */
-
 .status {
   display: inline-block;
   padding: 5px 12px;
@@ -228,10 +201,6 @@ tbody tr:hover {
   background: #fee2e2;
   color: #dc2626;
 }
-
-/* =========================
-   Button
-========================= */
 
 .manage-btn {
   display: inline-block;

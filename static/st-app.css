@@ -14,8 +14,6 @@ body {
   height: 100vh;
 }
 
-/* Sidebar */
-
 .sidebar {
   width: 240px;
   background: #fff;
@@ -52,13 +50,11 @@ body {
   font-weight: bold;
 }
 
-/* Main */
 
 .main {
   flex: 1;
 }
 
-/* Top Bar */
 
 .topbar {
   background: #fff;
@@ -78,8 +74,6 @@ body {
   margin-right: 8px;
 }
 
-/* Content */
-
 .content {
   padding: 35px;
 }
@@ -88,7 +82,6 @@ body {
   margin-bottom: 25px;
 }
 
-/* Tabs */
 
 .tabs {
   display: flex;
@@ -110,8 +103,6 @@ body {
   border-color: #1565c0;
 }
 
-/* Table */
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -129,8 +120,6 @@ table td {
   text-align: left;
 }
 
-/* Status */
-
 .status {
   padding: 6px 12px;
   border-radius: 5px;
@@ -141,8 +130,6 @@ table td {
   background: #fff3cd;
   color: #856404;
 }
-
-/* Buttons */
 
 button {
   border: none;

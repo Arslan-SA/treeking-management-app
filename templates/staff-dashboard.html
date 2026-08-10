@@ -15,7 +15,7 @@
 
   <div class="dashboard">
 
-    <!-- Sidebar -->
+
     <aside class="sidebar">
 
       <h2 class="logo">Trekking</h2>
@@ -30,7 +30,8 @@
         </li>
 
         <li>
-          <a href="{% if treks %}{{ url_for('manage_trek', trek_id=treks[0].id) }}{% else %}{{ url_for('staff_dashboard') }}{% endif %}">
+          <a
+            href="{% if treks %}{{ url_for('manage_trek', trek_id=treks[0].id) }}{% else %}{{ url_for('staff_dashboard') }}{% endif %}">
             <i class="bi bi-backpack"></i>
             My Treks
           </a>
@@ -64,11 +65,10 @@
     </aside>
 
 
-    <!-- Main -->
+
 
     <main class="content">
 
-      <!-- Navbar -->
 
       <nav class="topbar">
 
@@ -76,7 +76,8 @@
 
         <div class="profile">
           <i class="bi bi-person-circle"></i>
-          {{ session.get("username") }}
+          {{ current_user.username }}
+
         </div>
 
       </nav>
@@ -98,7 +99,7 @@
       </h1>
 
 
-      <!-- Cards -->
+
 
       <section class="cards">
 
@@ -138,7 +139,7 @@
       </section>
 
 
-      <!-- Table -->
+
 
       <section class="table-box">
 

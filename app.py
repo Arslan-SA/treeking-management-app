@@ -2,6 +2,13 @@ from datetime import datetime, timedelta
 from functools import wraps
 
 from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask_login import (
+    LoginManager,
+    current_user,
+    login_required as flask_login_required,
+    login_user,
+    logout_user,
+)
 from sqlalchemy import or_
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -28,6 +35,16 @@ app.permanent_session_lifetime = timedelta(days=1)
 
 db.init_app(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+login_manager.login_message_category = "error"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 def verify_password(user, password):
     if user.password.startswith("scrypt:") or user.password.startswith("pbkdf2:"):
@@ -38,17 +55,14 @@ def verify_password(user, password):
 def login_required(role=None):
     def decorator(view):
         @wraps(view)
+        @flask_login_required
         def wrapped(*args, **kwargs):
-            if "user_id" not in session:
-                return redirect(url_for("login"))
-
-            user = User.query.get(session["user_id"])
-            if not user or not user.is_active:
-                session.clear()
+            if not current_user.is_active:
+                logout_user()
                 flash("Your account is inactive. Contact the administrator.", "error")
                 return redirect(url_for("login"))
 
-            if role and user.role != role:
+            if role and current_user.role != role:
                 flash("Access denied", "error")
                 return redirect(url_for("login"))
 
@@ -57,12 +71,6 @@ def login_required(role=None):
         return wrapped
 
     return decorator
-
-
-def current_user():
-    if "user_id" not in session:
-        return None
-    return User.query.get(session["user_id"])
 
 
 def seed_admin():
@@ -95,17 +103,19 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    if "role" in session:
-        return redirect(url_for(f"{session['role']}_dashboard" if session["role"] != "trekker" else "user_dashboard"))
+    if current_user.is_authenticated:
+        return redirect(url_for(f"{current_user.role}_dashboard" if current_user.role != "trekker" else "user_dashboard"))
     treks = Trek.query.order_by(Trek.created_at.desc()).limit(3).all()
     return render_template("home.html", treks=treks)
 
 
 @app.route("/logout")
+@flask_login_required
 def logout():
-    session.clear()
+    logout_user()
     flash("Logged out successfully.", "success")
     return redirect(url_for("login"))
+
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -185,11 +195,10 @@ def login():
             flash("Your account is waiting for admin approval.", "error")
             return redirect(url_for("login"))
 
-    session["user_id"] = user.id
-    session["username"] = user.username
-    session["role"] = user.role
+    login_user(user)
 
     if user.role == "admin":
+
         return redirect(url_for("admin_dashboard"))
     if user.role == "staff":
         return redirect(url_for("staff_dashboard"))
@@ -408,7 +417,7 @@ def delete_staff(user_id):
 @login_required("admin")
 def admin_bookings():
     search = request.args.get("search", "").strip()
-    query = Booking.query.join(User).join(Trek)
+    query = Booking.query.join(Booking.user).join(Booking.trek)
     if search:
         like = f"%{search}%"
         query = query.filter(
@@ -469,7 +478,7 @@ def admin_search():
 @app.route("/staff-dashboard")
 @login_required("staff")
 def staff_dashboard():
-    treks = Trek.query.filter_by(assigned_staff_id=session["user_id"]).order_by(Trek.start_date).all()
+    treks = Trek.query.filter_by(assigned_staff_id=current_user.id).order_by(Trek.start_date).all()
     assigned_count = len(treks)
     open_treks = sum(1 for trek in treks if trek.status == "Open")
     total_participants = sum(len([booking for booking in trek.bookings if booking.booking_status != "Cancelled"]) for trek in treks)
@@ -488,7 +497,7 @@ def staff_dashboard():
 def manage_trek(trek_id):
     trek = Trek.query.get_or_404(trek_id)
 
-    if trek.assigned_staff_id != session["user_id"]:
+    if trek.assigned_staff_id != current_user.id:
         flash("You are not assigned to this trek.", "error")
         return redirect(url_for("staff_dashboard"))
 
@@ -523,7 +532,7 @@ def manage_trek(trek_id):
 @login_required("staff")
 def view_participants(trek_id):
     trek = Trek.query.get_or_404(trek_id)
-    if trek.assigned_staff_id != session["user_id"]:
+    if trek.assigned_staff_id != current_user.id:
         flash("You are not assigned to this trek.", "error")
         return redirect(url_for("staff_dashboard"))
     return render_template("staff-participants.html", trek=trek)
@@ -533,7 +542,7 @@ def view_participants(trek_id):
 @login_required("staff")
 def staff_update_booking_status(booking_id):
     booking = Booking.query.get_or_404(booking_id)
-    if booking.trek.assigned_staff_id != session["user_id"]:
+    if booking.trek.assigned_staff_id != current_user.id:
         flash("You can manage only your assigned trek records.", "error")
         return redirect(url_for("staff_dashboard"))
 
@@ -570,7 +579,7 @@ def user_dashboard():
 
     treks = query.order_by(Trek.start_date).all()
     my_bookings = (
-        Booking.query.filter_by(user_id=session["user_id"])
+        Booking.query.filter_by(user_id=current_user.id)
         .order_by(Booking.booking_date.desc())
         .all()
     )
@@ -593,7 +602,7 @@ def user_dashboard():
 @app.route("/profile", methods=["GET", "POST"])
 @login_required()
 def profile():
-    user = current_user()
+    user = current_user
     staff_profile = StaffProfile.query.filter_by(user_id=user.id).first() if user.role == "staff" else None
 
     if request.method == "POST":
@@ -620,7 +629,6 @@ def profile():
             staff_profile.experience = request.form.get("experience", type=int)
 
         db.session.commit()
-        session["username"] = user.username
         flash("Profile updated successfully!", "success")
         return redirect(url_for("profile"))
 
@@ -631,7 +639,7 @@ def profile():
 @login_required("trekker")
 def my_bookings():
     bookings = (
-        Booking.query.filter_by(user_id=session["user_id"])
+        Booking.query.filter_by(user_id=current_user.id)
         .order_by(Booking.booking_date.desc())
         .all()
     )
@@ -663,7 +671,7 @@ def confirm_booking(trek_id):
         flash("No slots available.", "error")
         return redirect(url_for("book_trek", trek_id=trek.id))
 
-    existing_booking = Booking.query.filter_by(user_id=session["user_id"], trek_id=trek.id).first()
+    existing_booking = Booking.query.filter_by(user_id=current_user.id, trek_id=trek.id).first()
 
     if existing_booking:
         flash("You have already booked this trek.", "warning")
@@ -671,7 +679,7 @@ def confirm_booking(trek_id):
 
     db.session.add(
         Booking(
-            user_id=session["user_id"],
+            user_id=current_user.id,
             trek_id=trek.id,
             booking_status="Booked",
             payment_status="Pending",
@@ -688,12 +696,12 @@ def confirm_booking(trek_id):
 @login_required()
 def booking_details(booking_id):
     booking = Booking.query.get_or_404(booking_id)
-    role = session.get("role")
+    role = current_user.role
 
-    if role == "trekker" and booking.user_id != session["user_id"]:
+    if role == "trekker" and booking.user_id != current_user.id:
         flash("Access denied", "error")
         return redirect(url_for("my_bookings"))
-    if role == "staff" and booking.trek.assigned_staff_id != session["user_id"]:
+    if role == "staff" and booking.trek.assigned_staff_id != current_user.id:
         flash("Access denied", "error")
         return redirect(url_for("staff_dashboard"))
 
@@ -703,7 +711,7 @@ def booking_details(booking_id):
 @app.route("/cancel-booking/<int:booking_id>", methods=["POST"])
 @login_required("trekker")
 def cancel_booking(booking_id):
-    booking = Booking.query.filter_by(id=booking_id, user_id=session["user_id"]).first_or_404()
+    booking = Booking.query.filter_by(id=booking_id, user_id=current_user.id).first_or_404()
     if booking.booking_status != "Booked":
         flash("Only booked treks can be cancelled.", "error")
         return redirect(url_for("my_bookings"))
@@ -713,6 +721,7 @@ def cancel_booking(booking_id):
     db.session.commit()
     flash("Booking cancelled.", "success")
     return redirect(url_for("my_bookings"))
+
 
 
 if __name__ == "__main__":

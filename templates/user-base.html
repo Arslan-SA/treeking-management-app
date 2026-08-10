@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}User Dashboard{% endblock %}</title>
-  {% if session.role == 'staff' %}
+  {% if current_user.role == 'staff' %}
   <link rel="stylesheet" href="{{ url_for('static', filename='staff_dashboard.css') }}">
   {% else %}
   <link rel="stylesheet" href="{{ url_for('static', filename='user-dashboard.css') }}">
@@ -19,7 +19,7 @@
       <h2 class="logo">Trekking</h2>
 
       <ul>
-        {% if session.role == 'staff' %}
+        {% if current_user.role == 'staff' %}
         <li class="{% if active_page|default('') == 'dashboard' %}active{% endif %}">
           <a href="{{ url_for('staff_dashboard') }}">
             <i class="bi bi-grid"></i>
@@ -56,13 +56,13 @@
         </li>
         {% else %}
         <li class="{% if active_page|default('') == 'dashboard' %}active{% endif %}">
-          <a href="{% if session.role == 'admin' %}{{ url_for('admin_dashboard') }}{% else %}{{ url_for('user_dashboard') }}{% endif %}">
+          <a href="{% if current_user.role == 'admin' %}{{ url_for('admin_dashboard') }}{% else %}{{ url_for('user_dashboard') }}{% endif %}">
             <i class="bi bi-house-door"></i>
             <span>Dashboard</span>
           </a>
         </li>
 
-        {% if session.role == 'trekker' %}
+        {% if current_user.role == 'trekker' %}
         <li class="{% if active_page|default('') == 'bookings' %}active{% endif %}">
           <a href="{{ url_for('my_bookings') }}">
             <i class="bi bi-calendar-check"></i>
@@ -88,15 +88,16 @@
       </ul>
     </aside>
 
-    <main class="{% if session.role == 'staff' %}content{% else %}main{% endif %}">
-      <header class="{% if session.role == 'staff' %}topbar{% else %}navbar{% endif %}">
+    <main class="{% if current_user.role == 'staff' %}content{% else %}main{% endif %}">
+      <header class="{% if current_user.role == 'staff' %}topbar{% else %}navbar{% endif %}">
         <h2>{% block page_heading %}Trekking Management Application{% endblock %}</h2>
 
         <div class="profile">
           <i class="bi bi-person-circle"></i>
-          <span>{{ session.username }}</span>
+          <span>{{ current_user.username }}</span>
         </div>
       </header>
+
 
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}

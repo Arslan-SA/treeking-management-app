@@ -4,47 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trekking Managment App</title>
+  <title>Trekking Management App</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 
 <body>
 
+  <div class="box">
+    <p id="login">Login</p>
 
-  <div class='box'>
+    <form action="{{ url_for('login') }}" method="POST">
+      <input type="email" placeholder="Email" class="field" name="email" required>
+      <input type="password" placeholder="Password" class="field" name="password" required>
 
-    <div>
-      <p id="login">Login</p>
-      <form action="{{ url_for('login') }}" method="POST">
-        <input type="email" placeholder="Email" id="in" name="email" required>
-        <br>
-        <br>
+      <div class="remember">
+        <input type="checkbox" id="me">
+        <label for="me">Remember Me</label>
+      </div>
 
-        <input type="password" placeholder="Password" id="in" name="password" required>
-        <div class="remember">
-          <input type="checkbox" id="me">
-          <label for="me">Remember Me</label>
-        </div>
+      <button type="submit">Login</button>
+    </form>
 
-        <br>
-        <button type="submit">Login</button>
-
-
-
-      </form>
-      <br>
-
-      <p id="line">
-        Don't have an account?<a href="{{url_for('register')}}">Register here</a>
-      </p>
-
-
-
-
-    </div>
-
+    <p id="line">
+      Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+    </p>
   </div>
-
 
 </body>
 

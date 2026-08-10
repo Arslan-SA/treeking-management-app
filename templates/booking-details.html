@@ -11,7 +11,8 @@
 </section>
 
 <section class="details-panel">
-  <a href="{% if session.role == 'admin' %}{{ url_for('admin_bookings') }}{% elif session.role == 'staff' %}{{ url_for('view_participants', trek_id=booking.trek_id) }}{% else %}{{ url_for('my_bookings') }}{% endif %}" class="back-link">Back</a>
+  <a href="{% if current_user.role == 'admin' %}{{ url_for('admin_bookings') }}{% elif current_user.role == 'staff' %}{{ url_for('view_participants', trek_id=booking.trek_id) }}{% else %}{{ url_for('my_bookings') }}{% endif %}" class="back-link">Back</a>
+
 
   <div class="details-grid">
     <p><strong>User:</strong> {{ booking.user.username }} ({{ booking.user.email }})</p>
