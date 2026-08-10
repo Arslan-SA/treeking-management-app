@@ -16,10 +16,10 @@
       <ul>
 
         <li>
-          <a href="/admin-dashboard"><i class="bi bi-house-door"></i> Dashboard
+          <a href="{{ url_for('admin_dashboard') }}"><i class="bi bi-house-door"></i> Dashboard
           </a>
         </li>
-        <li><a href="/admin-treek"><i class="bi bi-backpack"></i> Treks</a></li>
+        <li class="active"><a href="{{ url_for('admin_treek') }}"><i class="bi bi-backpack"></i> Treks</a></li>
         <li><a href="{{ url_for('admin_staff') }}"><i class="bi bi-person-badge"></i> Staff</a></li>
         <li><a href="{{ url_for('admin_users') }}"><i class="bi bi-people"></i> Users</a></li>
         <li><a href="{{ url_for('admin_bookings') }}"><i class="bi bi-calendar-check"></i> Bookings</a></li>
@@ -42,6 +42,16 @@
         </div>
 
       </header>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-list" style="padding: 10px 20px;">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
       <div class="top-bar">
         <h2>Add New Trek</h2>
         <form

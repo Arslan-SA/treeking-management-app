@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 html,
@@ -11,28 +14,39 @@ body {
 }
 
 .container {
-  background-color: rgb(252, 245, 235);
+  background-color: #f4f7fc;
   height: 100%;
   width: 100%;
   display: flex;
 }
 
 .sidebar {
-  background-color: rgb(139, 103, 103);
+  background-color: #83a1e2;
   width: 20%;
   height: 100%;
   padding-top: 98px;
-  border-right: solid 1px rgb(10, 10, 10);
-
 }
 
 li {
-  padding-top: 35px;
-  padding-left: 12px;
-  font-size: 18px;
+  padding-top: 0;
+  padding-left: 14px;
+  font-size: 15px;
   margin: 12px;
+  color: #fff;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
 
+li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  color: #fff;
+}
 
+li:hover {
+  background-color: rgba(255, 255, 255, .15);
 }
 
 .elements {
@@ -41,9 +55,7 @@ li {
 
 .main {
   flex: 1;
-  background-color: white;
-
-
+  background-color: #f4f7fc;
 }
 
 .sidebar ul {
@@ -54,52 +66,56 @@ li {
 
 .sidebar a {
   text-decoration: none;
-  color: black;
+  color: #fff;
 }
 
 .active {
-  background: #e8f0fe;
-  color: #2563eb;
-  border-radius: 8px;
+  background: #fff;
 }
 
-
+.active a {
+  color: #2563eb;
+  font-weight: 600;
+}
 
 .navbar {
   width: 100%;
   height: 15%;
-  background-color: rgb(138, 35, 35);
-  margin: none;
-  border-bottom: solid 1px rgb(10, 10, 10);
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 h1 {
-  padding-top: 45px;
-  margin: auto;
+  padding-top: 0;
+  margin: auto 0;
   padding-left: 15px;
-
+  color: #1e3a8a;
 }
 
 .admin {
-  padding-top: 80px;
-  font-size: 43px;
+  padding-top: 0;
+  font-size: 18px;
+  color: #555;
+  font-weight: 600;
 }
 
 i {
-  padding-top: 80px;
-  font-size: 43px;
+  padding-top: 0;
+  font-size: 26px;
+  color: #2563eb;
 }
 
 #title {
-  font-size: 44px;
-  margin: 37px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
+  font-size: 32px;
+  margin: 30px 37px;
+  color: #222;
 }
 
 .cards {
-  background-color: white;
+  background-color: #f4f7fc;
   width: 100%;
   height: 190px;
   display: flex;
@@ -107,71 +123,46 @@ i {
   align-items: center;
 }
 
-.card1 {
-  background-color: white;
-  display: flex;
-  width: 33%;
-  height: 100%;
-  border: solid 3px rgb(145, 134, 134);
-  margin: 4px;
-  margin-left: 24px;
-  border-radius: 7px;
-}
-
-.card2 {
-  background-color: white;
-  display: flex;
-  width: 33%;
-  height: 100%;
-  border: solid 3px rgb(145, 134, 134);
-  margin: 4px;
-  border-radius: 7px;
-
-}
-
-.card3 {
-  background-color: white;
-  display: flex;
-  width: 33%;
-  height: 100%;
-  border: solid 3px rgb(145, 134, 134);
-  margin: 4px;
-  border-radius: 7px;
-
-
-}
-
+.card1,
+.card2,
+.card3,
 .card4 {
   background-color: white;
   display: flex;
   width: 33%;
   height: 100%;
-  border: solid 3px rgb(145, 134, 134);
+  border: 1px solid #e5e5e5;
   margin: 4px;
-  border-radius: 7px;
+  border-radius: 12px;
+}
 
-
+.card1 {
+  margin-left: 24px;
 }
 
 #user-icon {
-  font-size: 50px;
+  font-size: 40px;
   transform: translateX(75px);
+  color: #2563eb;
 }
 
 .one {
-  font-size: 34px;
+  font-size: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  color: #1e3a8a;
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 22px;
   margin-bottom: 10px;
   display: flex;
   margin-top: 8px;
   padding-left: 10px;
+  color: #555;
+  font-weight: 500;
 }
 
 .bkt {
@@ -179,22 +170,25 @@ h3 {
   border-collapse: collapse;
   margin-top: 20px;
   background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .bkt th,
 .bkt td {
-  border: 1px solid #ddd;
-  padding: 22px;
+  border: 1px solid #eee;
+  padding: 18px;
   text-align: left;
 }
 
 .bkt th {
-  background-color: #f3f3f3;
-  font-weight: bold;
+  background-color: #2563eb;
+  color: #fff;
+  font-weight: 600;
 }
 
 .bkt tr:hover {
-  background-color: #f9f9f9;
+  background-color: #f7faff;
 }
 
 tr:nth-child(even) {
@@ -204,10 +198,17 @@ tr:nth-child(even) {
 h2 {
   margin-top: 35px;
   margin-bottom: 15px;
+  color: #1e3a8a;
 }
 
 #view {
   padding-left: 1050px;
   padding-top: 14px;
-  font-size: 30px;
+  font-size: 16px;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+#view:hover {
+  text-decoration: underline;
 }

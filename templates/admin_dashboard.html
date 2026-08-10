@@ -14,10 +14,8 @@
         <aside class="sidebar">
 
             <ul>
-
-                <li>
-                    <a href="/admin-dashboard"><i class="bi bi-house-door"></i> Dashboard
-                    </a>
+                <li class="active">
+                    <a href="{{ url_for('admin_dashboard') }}"><i class="bi bi-house-door"></i> Dashboard</a>
                 </li>
                 <li><a href="{{ url_for('admin_treek') }}"><i class="bi bi-backpack"></i> Treks</a></li>
                 <li><a href="{{ url_for('admin_staff') }}"><i class="bi bi-person-badge"></i> Staff</a></li>
@@ -39,6 +37,17 @@
 
 
             </header>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-list" style="padding: 10px 20px;">
+                {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
             <p id="title">Dashboard</p>
             <div class="cards">
                 <div class="card1">

@@ -140,7 +140,9 @@ body {
 ========================= */
 
 section.available-treks,
-section.my-bookings {
+section.my-bookings,
+section.profile-panel,
+section.details-panel {
   padding: 20px 30px;
 }
 
@@ -151,9 +153,60 @@ section.my-bookings h2 {
   margin-bottom: 15px;
 }
 
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 15px;
+}
+
+.section-heading h2 {
+  margin-bottom: 0;
+}
+
+.section-heading a,
+.back-link {
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.section-heading a:hover,
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.filter-form select,
+.filter-form input,
+.profile-form input {
+  border: 1px solid #d7dce5;
+  border-radius: 6px;
+  color: #333;
+  font: inherit;
+  min-height: 38px;
+  padding: 8px 10px;
+}
+
+.filter-form input {
+  min-width: 220px;
+}
+
 /* =========================
    Table
 ========================= */
+
+.table-wrap {
+  overflow-x: auto;
+}
 
 table {
   width: 100%;
@@ -215,8 +268,149 @@ button:hover {
   background: #1d4ed8;
 }
 
-.available-treks a {
+.available-treks a,
+.button-link {
   text-decoration: none;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: #2563eb;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 34px;
+  padding: 8px 16px;
+}
+
+.button-link:hover {
+  background: #1d4ed8;
+}
+
+.danger-btn {
+  background: #dc2626;
+}
+
+.danger-btn:hover {
+  background: #b91c1c;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions form {
+  margin: 0;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #1e3a8a;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+
+.status-open,
+.status-booked,
+.status-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.profile-panel,
+.details-panel {
+  max-width: 780px;
+}
+
+.profile-form,
+.details-grid {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.profile-form {
+  display: grid;
+  gap: 10px;
+}
+
+.profile-form label {
+  color: #1e3a8a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.profile-form button {
+  margin-top: 10px;
+  width: fit-content;
+}
+
+.approval-status {
+  color: #555;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.details-panel .back-link {
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.details-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.details-grid p {
+  color: #555;
+  margin: 0;
+}
+
+.flash-list {
+  display: grid;
+  gap: 10px;
+  padding: 20px 30px 0;
+}
+
+.flash {
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 12px 14px;
+}
+
+.flash-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.flash-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.flash-warning {
+  background: #fef3c7;
+  color: #92400e;
 }
 
 /* =========================
@@ -254,5 +448,18 @@ button:hover {
 
   .welcome h2 {
     font-size: 20px;
+  }
+
+  section.available-treks,
+  section.my-bookings,
+  section.profile-panel,
+  section.details-panel {
+    padding: 18px 16px;
+  }
+
+  .filter-form input,
+  .filter-form select,
+  .filter-form button {
+    width: 100%;
   }
 }

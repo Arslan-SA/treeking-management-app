@@ -1,39 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'user-base.html' %}
+{% set active_page = 'profile' %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='user-dashboard.css') }}">
-</head>
+{% block title %}Profile{% endblock %}
+{% block page_heading %}Profile{% endblock %}
 
-<body>
-  <main style="max-width: 760px; margin: 40px auto; background: #fff; padding: 28px; border: 1px solid #e5e8ee;">
-    <a href="{% if session.role == 'admin' %}{{ url_for('admin_dashboard') }}{% elif session.role == 'staff' %}{{ url_for('staff_dashboard') }}{% else %}{{ url_for('user_dashboard') }}{% endif %}">Back to Dashboard</a>
-    <h1>Update Profile</h1>
-    <form action="{{ url_for('profile') }}" method="POST">
-      <label>Username</label>
-      <input type="text" name="username" value="{{ user.username }}" required>
-      <br><br>
-      <label>Email</label>
-      <input type="email" name="email" value="{{ user.email }}" required>
-      <br><br>
-      <label>New Password</label>
-      <input type="password" name="password" placeholder="Leave blank to keep current password">
-      <br><br>
-      {% if staff_profile %}
-      <label>Phone</label>
-      <input type="text" name="phone" value="{{ staff_profile.phone or '' }}">
-      <br><br>
-      <label>Experience</label>
-      <input type="number" name="experience" min="0" value="{{ staff_profile.experience or 0 }}">
-      <br><br>
-      <p>Approval Status: {{ "Approved" if staff_profile.approved else "Pending" }}</p>
-      {% endif %}
-      <button type="submit">Save Profile</button>
-    </form>
-  </main>
-</body>
+{% block content %}
+<section class="welcome">
+  <h2>Update Profile</h2>
+  <p>Keep your account details up to date.</p>
+</section>
 
-</html>
+<section class="profile-panel">
+  <form action="{{ url_for('profile') }}" method="POST" class="profile-form">
+    <label for="username">Username</label>
+    <input id="username" type="text" name="username" value="{{ user.username }}" required>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" value="{{ user.email }}" required>
+
+    <label for="password">New Password</label>
+    <input id="password" type="password" name="password" placeholder="Leave blank to keep current password">
+
+    {% if staff_profile %}
+    <label for="phone">Phone</label>
+    <input id="phone" type="text" name="phone" value="{{ staff_profile.phone or '' }}">
+
+    <label for="experience">Experience</label>
+    <input id="experience" type="number" name="experience" min="0" value="{{ staff_profile.experience or 0 }}">
+
+    <p class="approval-status">Approval Status: {{ "Approved" if staff_profile.approved else "Pending" }}</p>
+    {% endif %}
+
+    <button type="submit">Save Profile</button>
+  </form>
+</section>
+{% endblock %}

@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Staff</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 </head>
 
@@ -12,20 +13,37 @@
   <div class="container">
     <aside class="sidebar">
       <ul>
-        <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ url_for('admin_treek') }}">Treks</a></li>
-        <li><a href="{{ url_for('staff_approval') }}">Approvals</a></li>
-        <li><a href="{{ url_for('admin_users') }}">Users</a></li>
-        <li><a href="{{ url_for('admin_bookings') }}">Bookings</a></li>
-        <li><a href="{{ url_for('admin_search') }}">Search</a></li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        <li><a href="{{ url_for('admin_dashboard') }}"><i class="bi bi-house-door"></i> Dashboard</a></li>
+        <li><a href="{{ url_for('admin_treek') }}"><i class="bi bi-backpack"></i> Treks</a></li>
+        <li class="active"><a href="{{ url_for('admin_staff') }}"><i class="bi bi-person-badge"></i> Staff</a></li>
+        <li><a href="{{ url_for('admin_users') }}"><i class="bi bi-people"></i> Users</a></li>
+        <li><a href="{{ url_for('admin_bookings') }}"><i class="bi bi-calendar-check"></i> Bookings</a></li>
+        <li><a href="{{ url_for('admin_search') }}"><i class="bi bi-search"></i> Search</a></li>
+        <li><a href="{{ url_for('staff_approval') }}"><i class="bi bi-check2-square"></i> Approvals</a></li>
+        <li><a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
       </ul>
     </aside>
     <div class="main">
-      <header class="navbar"><h1>Trekking Management Application</h1></header>
+      <header class="navbar">
+        <h1>Trekking Management Application</h1>
+        <i class="bi bi-person-circle"></i>
+        <p class="admin">Admin</p>
+        <i class="bi bi-chevron-down"></i>
+      </header>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-list" style="padding: 10px 20px;">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
       <p id="title">Trek Staff</p>
       <form action="{{ url_for('admin_staff') }}" method="GET">
-        <input id="search" type="text" name="search" placeholder="Search staff by name, email, or ID" value="{{ search }}">
+        <input id="search" type="text" name="search" placeholder="Search staff by name, email, or ID"
+          value="{{ search }}">
       </form>
       <table class="bkt">
         <thead>
@@ -58,7 +76,9 @@
             </td>
           </tr>
           {% else %}
-          <tr><td colspan="7">No staff found.</td></tr>
+          <tr>
+            <td colspan="7">No staff found.</td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>

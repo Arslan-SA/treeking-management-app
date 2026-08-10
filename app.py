@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import wraps
 
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -20,6 +20,11 @@ app.secret_key = "trek_management_secret"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///trek.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=1)
+# Ensure cookies work in development (adjust for production)
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = False
+app.permanent_session_lifetime = timedelta(days=1)
 
 db.init_app(app)
 
@@ -92,7 +97,8 @@ with app.app_context():
 def index():
     if "role" in session:
         return redirect(url_for(f"{session['role']}_dashboard" if session["role"] != "trekker" else "user_dashboard"))
-    return redirect(url_for("login"))
+    treks = Trek.query.order_by(Trek.created_at.desc()).limit(3).all()
+    return render_template("home.html", treks=treks)
 
 
 @app.route("/logout")
@@ -568,11 +574,17 @@ def user_dashboard():
         .order_by(Booking.booking_date.desc())
         .all()
     )
+    completed_bookings = [
+        booking
+        for booking in my_bookings
+        if booking.booking_status == "Completed" or booking.trek.status == "Completed"
+    ]
 
     return render_template(
         "user-dashboard.html",
         treks=treks,
         my_bookings=my_bookings,
+        completed_bookings=completed_bookings,
         difficulty=difficulty,
         location=location,
     )
@@ -612,7 +624,7 @@ def profile():
         flash("Profile updated successfully!", "success")
         return redirect(url_for("profile"))
 
-    return render_template("profile.html", user=user, staff_profile=staff_profile)
+    return render_template("profile.html", user=user, staff_profile=staff_profile, treks=user.treks if user and user.role == "staff" else [])
 
 
 @app.route("/my-bookings")
@@ -623,7 +635,12 @@ def my_bookings():
         .order_by(Booking.booking_date.desc())
         .all()
     )
-    return render_template("my-bookings.html", bookings=bookings)
+    completed_bookings = [
+        booking
+        for booking in bookings
+        if booking.booking_status == "Completed" or booking.trek.status == "Completed"
+    ]
+    return render_template("my-bookings.html", bookings=bookings, completed_bookings=completed_bookings)
 
 
 @app.route("/book-trek/<int:trek_id>")

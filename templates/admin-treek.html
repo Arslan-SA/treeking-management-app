@@ -20,8 +20,8 @@
     <aside class="sidebar">
 
       <ul>
-        <li><a href="/admin-dashboard"><i class="bi bi-house-door"></i> Dashboard</a></li>
-        <li><a href="{{ url_for('admin_treek') }}"><i class="bi bi-backpack"></i> Treks</a></li>
+        <li><a href="{{ url_for('admin_dashboard') }}"><i class="bi bi-house-door"></i> Dashboard</a></li>
+        <li class="active"><a href="{{ url_for('admin_treek') }}"><i class="bi bi-backpack"></i> Treks</a></li>
         <li><a href="{{ url_for('admin_staff') }}"><i class="bi bi-person-badge"></i> Staff</a></li>
         <li><a href="{{ url_for('admin_users') }}"><i class="bi bi-people"></i> Users</a></li>
         <li><a href="{{ url_for('admin_bookings') }}"><i class="bi bi-calendar-check"></i> Bookings</a></li>
@@ -48,12 +48,22 @@
 
       </header>
 
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-list" style="padding: 10px 20px;">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+
 
       <div class="top-bar">
 
         <h2>Treks</h2>
 
-        <a href="/add-trek" class="add-btn">
+        <a href="{{ url_for('add_trek') }}" class="add-btn">
           <i class="bi bi-plus-lg"></i>
           Add New Trek
         </a>
@@ -63,7 +73,8 @@
 
       <form action="{{ url_for('admin_treek') }}" method="GET">
 
-        <input type="text" id="search" name="search" placeholder="Search Treks by name, location, or ID" value="{{ search }}">
+        <input type="text" id="search" name="search" placeholder="Search Treks by name, location, or ID"
+          value="{{ search }}">
 
       </form>
 
