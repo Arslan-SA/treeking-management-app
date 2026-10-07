@@ -72,16 +72,8 @@ class Booking(db.Model):
     db.UniqueConstraint("user_id", "trek_id", name="uq_user_trek_booking"),
   )
   id = db.Column(db.Integer, primary_key = True)
-  user_id = db.Column(
-    db.Integer,
-    db.ForeignKey("users.id"),
-    nullable = False
-  )
-  trek_id = db.Column(
-    db.Integer,
-    db.ForeignKey("treks.id"),
-    nullable = False
-  )
+  user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
+  trek_id = db.Column(db.Integer, db.ForeignKey("treks.id"), nullable = False)
   booking_date = db.Column(db.DateTime, default=lambda:datetime.now(UTC))
   booking_status = db.Column(db.String(50), default="Pending")
   payment_status = db.Column(db.String(50), default="Pending")
